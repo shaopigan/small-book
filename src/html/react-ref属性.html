@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>react-ref属性</title>
+    <script src="https://cdn.bootcss.com/react/15.0.1/react.js"></script>
+    <script src="https://cdn.bootcss.com/react/15.0.1/react-dom.js"></script>
+    <script>
+        class Post extends React.Component{
+            render (){
+                return (
+                    <div>
+                        <h1 style={{textAlign:'center'}}>123</h1>
+                    </div>
+                )
+            }
+        }
+
+        ReactDOM.render(
+            <Post/>,
+            document.getElementById('root')
+        )
+    </script>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+</html>
