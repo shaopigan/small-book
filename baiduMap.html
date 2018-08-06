@@ -5,172 +5,185 @@
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>大屏</title>
+    <link rel="stylesheet" href="./bootstrap.css">
     <style type="text/css">
         html{height:100%}
-        body{height:100%;margin:0px;padding:0px}
+        body{height:100%;margin:0px;padding:0px;color: #fff}
         #container{height:100%}
         /*去掉左下角百度logo*/
         .anchorBL{display:none;}
+        #header {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        .smCharts {
+            width: 245px;
+            background: #021d28;
+            opacity: 0.7;
+        }
+        .leftchart {
+            height: 320px;
+        }
+        .rightchart {
+            height: 490px;
+        }
+        .items {
+            height: 80px;
+            width: 100%;
+            background: #021d28;
+            opacity: 0.7;
+            display: flex;
+            justify-content: flex-end;
+            flex-direction: column;
+            padding: 5px 10px;
+        }
+        .items > div {
+            color: #ffffff;
+        }
+        .items > span {
+            color: #f9e600;
+            font-size: 50px;
+            line-height: 50px;
+            font-family: 'Agency FB'
+        }
+        h4 {
+            margin: 10px;
+            color: #ffffff;
+        }
+        #header {
+            width: 100%;
+            background: url("./head.png") no-repeat;
+        }
+        .table-bordered,.table-bordered thead > tr > td,.table-bordered tbody > tr > td{
+            border-color: #1b6e89;
+        }
+        .alarmFont {
+            color: #f9e600;
+            font-size: 30px;
+            font-family: 'Agency FB';
+        }
+        .rightBottomItems {
+            flex-grow:1;
+            font-size:18px;
+            line-height: 18px;
+            padding-top: 10px;
+            border-top: 3px solid rgba(2,29,40,0.7);
+        }
     </style>
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=3.0&ak=SBpohKPOmcEdDU0mDNaClH47EvFUTi9K"></script>
+    <script src="jquery-1.11.3.min.js"></script>
 </head>
 <body>
     <div id="container"></div>
+    <div id="header">
+        <h2 style="text-align: center;color: #ffffff;margin-top: 5px;margin-bottom:10px;letter-spacing:5px">平安地图综治版</h2>
+        <div style="border: 1px solid #1b6e89;border-radius: 3px;width: 150px;height: 26px;line-height:26px;padding:0 10px;margin: 0 auto;background: #021d28;color: #f9e600;display: flex;justify-content: space-around">
+            <span>2018.08.03</span>
+            <span>13:56</span>
+        </div>
+    </div>
+        <div style="height:1000px;position: absolute;left: 20px;bottom: 0;display: flex;flex-direction: column;justify-content: space-between">
+            <div class="leftchart smCharts">
+                <h4 style="text-align: left;">综治数据采集</h4>
+                <div style="width: 100%;height: 275px;overflow: hidden" id="datapick"></div>
+            </div>
+            <div class="leftchart smCharts">
+                <h4 style="text-align: left">平安元素</h4>
+                <div style="width: 100%;height: 275px;overflow: hidden;padding: 4px" id="peacelement">
+                    <table class="table table-bordered" style="color: #ffffff;">
+                        <thead>
+                            <tr>
+                                <td></td>
+                                <td>类别</td>
+                                <td>数量</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>政法部门</td>
+                                <td>2672</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>公安机关</td>
+                                <td>153</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>火车站</td>
+                                <td>10</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>大型餐饮</td>
+                                <td>7</td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td>汽车站</td>
+                                <td>40</td>
+                            </tr>
+                            <tr>
+                                <td>6</td>
+                                <td>银行</td>
+                                <td>4</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="leftchart smCharts">
+                <h4 style="text-align: left">矛盾纠纷</h4>
+                <div style="width: 100%;height: 275px;overflow: hidden" id="tangle"></div>
+            </div>
+        </div>
+        <div style="position: absolute;top: 80px;left: 285px;width: 120px;height: 360px;display: flex;flex-direction: column;justify-content: space-between">
+            <div class="items">
+                <div>特殊人群</div>
+                <span>2980</span>
+            </div>
+            <div class="items">
+                <div>重点青少年</div>
+                <span>2036</span>
+            </div>
+            <div class="items">
+                <div>社会治安</div>
+                <span>298</span>
+            </div>
+            <div class="items">
+                <div>矛盾纠纷</div>
+                <span>2980</span>
+            </div>
+        </div>
+        <div style="position: absolute;bottom: 0;left: 285px;background: #021d28;opacity: 0.7;width: 1350px;height: 280px;">
+            <span style="position: absolute;top:10px;left: 130px;color: #ffffff;border: 1px solid #336600;padding: 0 5px;border-radius: 3px;background-color: #021f2b">当月区县考核</span>
+            <span style="position: absolute;top:10px;left: 230px;color: #ffffff;border: 1px solid #336600;padding: 0 5px;border-radius: 3px;background-color: #021f2b">市级部门考核</span>
+            <div style="height: 280px;width: 1350px" id="peacetripod">
+                <!--<h4 style="text-align: left;width: 50%;margin-right: 0">平安鼎考核</h4>-->
+            </div>
+        </div>
+        <div style="height:1000px;position: absolute;right: 20px;bottom: 0;display: flex;flex-direction: column;justify-content: space-between">
+            <div class="rightchart smCharts">
+                <h4 style="text-align: left">重点人员管控</h4>
+                <div id="vipcontrol" style="width: 100%;height: 280px"></div>
+                <h4 style="display: flex;justify-content: space-between;margin:30px 40px"><span style="line-height: 33px">今日预警数</span><span class="alarmFont">27</span></h4>
+                <h4 style="display: flex;justify-content: space-between;margin:30px 40px"><span style="line-height: 33px">其中：一级预警</span><span class="alarmFont">5</span></h4>
+            </div>
+            <div class="rightchart smCharts">
+                <div style="display: flex;justify-content: space-around;text-align: center">
+                    <div class="rightBottomItems">便民服务</div>
+                    <div class="rightBottomItems">综治防控</div>
+                </div>
+                <div style="width: 100%;height: 380px;display: block" id="poepleservice">
+
+                </div>
+                <div style="width: 100%;height: 380px;display: none" id="complexcontrol">
+                </div>
+            </div>
+        </div>
+    <script type="text/javascript" src="./echarts-all.js"></script>
     <script type="text/javascript" src="./baiduMap.js"></script>
-    <!--<script type="text/javascript">
-        var map = new BMap.Map("container");
-        // 创建地图实例  108.95309828,34.2777999
-        var point = new BMap.Point(108.95815828, 34.2737999);
-        // var point = new BMap.Point(108.563260, 34.153959);
-        // 创建点坐标
-        map.centerAndZoom(point, 14);
-        // 初始化地图，设置中心点坐标和地图级别
-        // map.setMapStyle({style:'midnight'});
-        // 设置地图主题（蓝黑风格）
-        map.enableScrollWheelZoom(true);
-        //开启鼠标滚轮缩放
-        map.setMapStyle({
-            styleJson:[
-                {
-                    "featureType": "arterial",
-                    "elementType": "all",
-                    "stylers": {
-                        "color": "#28586cff"
-                    }
-                },
-                {
-                    "featureType": "background",
-                    "elementType": "all",
-                    "stylers": {
-                        "color": "#043448ff"
-                    }
-                },
-                {
-                    "featureType": "local",
-                    "elementType": "all",
-                    "stylers": {
-                        "color": "#28586cff"
-                    }
-                },
-                {
-                    "featureType": "highway",
-                    "elementType": "labels.text.fill",
-                    "stylers": {
-                        "color": "#42cecdff"
-                    }
-                },
-                {
-                    "featureType": "highway",
-                    "elementType": "labels.text.stroke",
-                    "stylers": {
-                        "color": "#000000ff"
-                    }
-                },
-                {
-                    "featureType": "subway",
-                    "elementType": "geometry.stroke",
-                    "stylers": {
-                        "color": "#2adeebff"
-                    }
-                },
-                {
-                    "featureType": "subway",
-                    "elementType": "labels.icon",
-                    "stylers": {
-                        "color": "#2adeebff",
-                        "visibility": "off"
-                    }
-                },
-                {
-                    "featureType": "poilabel",
-                    "elementType": "labels.icon",
-                    "stylers": {
-                        "visibility": "off"
-                    }
-                },
-                {
-                    "featureType": "subway",
-                    "elementType": "labels.text.fill",
-                    "stylers": {
-                        "color": "#42cecdff"
-                    }
-                },
-                {
-                    "featureType": "subway",
-                    "elementType": "labels.text.stroke",
-                    "stylers": {
-                        "color": "#000000ff"
-                    }
-                },
-                {
-                    "featureType": "district",
-                    "elementType": "labels.text.fill",
-                    "stylers": {
-                        "color": "#2ca1a2ff",
-                        "visibility": "on"
-                    }
-                },
-                {
-                    "featureType": "poilabel",
-                    "elementType": "all",
-                    "stylers": {
-                        "visibility": "off"
-                    }
-                },
-                {
-                    "featureType": "arterial",
-                    "elementType": "labels.text.fill",
-                    "stylers": {
-                        "color": "#42cecdff"
-                    }
-                },
-                {
-                    "featureType": "arterial",
-                    "elementType": "labels.text.stroke",
-                    "stylers": {
-                        "color": "#000000ff"
-                    }
-                },
-                {
-                    "featureType": "district",
-                    "elementType": "labels.text.stroke",
-                    "stylers": {
-                        "color": "#043448ff",
-                        "visibility": "on"
-                    }
-                },
-                {
-                    "featureType": "town",
-                    "elementType": "all",
-                    "stylers": {}
-                },
-                {
-                    "featureType": "highway",
-                    "elementType": "all",
-                    "stylers": {
-                        "color": "#35aad8ff"
-                    }
-                }
-            ]
-        });
-
-         map.enableHighResolution = true;
-        // 使用高分辨率地图
-        // 地图背景色
-
-        //获取浏览器经纬度
-        /*var geolocation = new BMap.Geolocation();
-        geolocation.getCurrentPosition(function(r){
-            if(this.getStatus() == BMAP_STATUS_SUCCESS){
-                var mk = new BMap.Marker(r.point);
-                map.addOverlay(mk);
-                map.panTo(r.point);
-                alert('您的位置：'+r.point.lng+','+r.point.lat);
-            }
-            else {
-                alert('failed'+this.getStatus());
-            }
-        });*/
-    </script>-->
 </body>
 </html>
