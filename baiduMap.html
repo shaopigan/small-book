@@ -58,6 +58,10 @@
         .table-bordered,.table-bordered thead > tr > td,.table-bordered tbody > tr > td{
             border-color: #1b6e89;
         }
+        .table-bordered thead > tr,.table > tbody > tr:nth-of-type(odd){
+            background-color: rgba(2,29,40,1);
+            z-index: 9;
+        }
         .alarmFont {
             color: #f9e600;
             font-size: 30px;
@@ -69,6 +73,46 @@
             line-height: 18px;
             padding-top: 10px;
             border-top: 3px solid rgba(2,29,40,0.7);
+            cursor: pointer;
+        }
+        .kaoHe {
+            position: absolute;
+            top:10px;
+            color: #ffffff;
+            border: 1px solid #336600;
+            padding: 0 5px;
+            border-radius: 3px;
+            background-color: #021f2b;
+            z-index: 1;
+            cursor: pointer;
+        }
+        .topRightH4 {
+            display: flex;
+            justify-content: space-between;
+            margin:30px 40px
+        }
+        .topMiddle4 {
+            position: absolute;
+            top: 80px;
+            left: 285px;
+            width: 120px;
+            height: 360px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between
+        }
+        .headerTime {
+            border: 1px solid #1b6e89;
+            border-radius: 3px;
+            width: 150px;
+            height: 26px;
+            line-height:26px;
+            padding:0 10px;
+            margin: 0 auto;
+            background: #021d28;
+            color: #f9e600;
+            display: flex;
+            justify-content: space-around
         }
     </style>
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=3.0&ak=SBpohKPOmcEdDU0mDNaClH47EvFUTi9K"></script>
@@ -78,7 +122,7 @@
     <div id="container"></div>
     <div id="header">
         <h2 style="text-align: center;color: #ffffff;margin-top: 5px;margin-bottom:10px;letter-spacing:5px">平安地图综治版</h2>
-        <div style="border: 1px solid #1b6e89;border-radius: 3px;width: 150px;height: 26px;line-height:26px;padding:0 10px;margin: 0 auto;background: #021d28;color: #f9e600;display: flex;justify-content: space-around">
+        <div class="headerTime">
             <span>2018.08.03</span>
             <span>13:56</span>
         </div>
@@ -90,8 +134,8 @@
             </div>
             <div class="leftchart smCharts">
                 <h4 style="text-align: left">平安元素</h4>
-                <div style="width: 100%;height: 275px;overflow: hidden;padding: 4px" id="peacelement">
-                    <table class="table table-bordered" style="color: #ffffff;">
+                <div style="width: 100%;height: 275px;overflow: hidden;padding: 4px 8px" id="peacelement">
+                    <table class="table table-bordered table-striped" style="color: #6aa6da;font-weight: 700">
                         <thead>
                             <tr>
                                 <td></td>
@@ -139,7 +183,7 @@
                 <div style="width: 100%;height: 275px;overflow: hidden" id="tangle"></div>
             </div>
         </div>
-        <div style="position: absolute;top: 80px;left: 285px;width: 120px;height: 360px;display: flex;flex-direction: column;justify-content: space-between">
+        <div class="topMiddle4">
             <div class="items">
                 <div>特殊人群</div>
                 <span>2980</span>
@@ -158,29 +202,25 @@
             </div>
         </div>
         <div style="position: absolute;bottom: 0;left: 285px;background: #021d28;opacity: 0.7;width: 1350px;height: 280px;">
-            <span style="position: absolute;top:10px;left: 130px;color: #ffffff;border: 1px solid #336600;padding: 0 5px;border-radius: 3px;background-color: #021f2b">当月区县考核</span>
-            <span style="position: absolute;top:10px;left: 230px;color: #ffffff;border: 1px solid #336600;padding: 0 5px;border-radius: 3px;background-color: #021f2b">市级部门考核</span>
-            <div style="height: 280px;width: 1350px" id="peacetripod">
-                <!--<h4 style="text-align: left;width: 50%;margin-right: 0">平安鼎考核</h4>-->
-            </div>
+            <span class="kaoHe" style="left: 130px;box-shadow: 0px 0px 5px #f9e600 inset">当月区县考核</span>
+            <span class="kaoHe" style="left: 230px;">市级部门考核</span>
+            <div style="height: 280px;width: 1350px;display: block" id="peacetripod"></div>
+            <div style="height: 280px;width: 1350px;display: none" id="bumen"></div>
         </div>
         <div style="height:1000px;position: absolute;right: 20px;bottom: 0;display: flex;flex-direction: column;justify-content: space-between">
             <div class="rightchart smCharts">
                 <h4 style="text-align: left">重点人员管控</h4>
                 <div id="vipcontrol" style="width: 100%;height: 280px"></div>
-                <h4 style="display: flex;justify-content: space-between;margin:30px 40px"><span style="line-height: 33px">今日预警数</span><span class="alarmFont">27</span></h4>
-                <h4 style="display: flex;justify-content: space-between;margin:30px 40px"><span style="line-height: 33px">其中：一级预警</span><span class="alarmFont">5</span></h4>
+                <h4 class="topRightH4"><span style="line-height: 33px">今日预警数</span><span class="alarmFont">27</span></h4>
+                <h4 class="topRightH4"><span style="line-height: 33px">其中：一级预警</span><span class="alarmFont">5</span></h4>
             </div>
             <div class="rightchart smCharts">
                 <div style="display: flex;justify-content: space-around;text-align: center">
-                    <div class="rightBottomItems">便民服务</div>
+                    <div class="rightBottomItems" style="border-top: 3px solid #f9e600">便民服务</div>
                     <div class="rightBottomItems">综治防控</div>
                 </div>
-                <div style="width: 100%;height: 380px;display: block" id="poepleservice">
-
-                </div>
-                <div style="width: 100%;height: 380px;display: none" id="complexcontrol">
-                </div>
+                <div style="width: 100%;height: 380px;display: block" id="poepleservice"></div>
+                <div style="width: 100%;height: 380px;display: none" id="complexcontrol"></div>
             </div>
         </div>
     <script type="text/javascript" src="./echarts-all.js"></script>

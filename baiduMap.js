@@ -1,10 +1,26 @@
 function FullScreen() {
     this._init();
     this.serviceToControl();
+    this.areaToDivision();
 }
 
 FullScreen.prototype = {
+    /*
+    * ajax封装
+    * */
+    _ajax:function (from,type,callback){
+        $.ajax({
+            url:from,
+            type:type,
+            dataType:'json',
+            success:function (res) {
+                callback(res);
+            },
+            error:function () {
 
+            }
+        });
+    },
     /*
     * 初始化函数
     * */
@@ -180,7 +196,6 @@ FullScreen.prototype = {
                 textStyle:{
                     color:'#fff'
                 },
-                data:['机构队伍','实有人口','社会组织','特殊人群','重点青少年','社会治安','矛盾纠纷排查','校园周边安全','护路护线']
             },
             series: [
                 {
@@ -208,21 +223,23 @@ FullScreen.prototype = {
                     type:'pie',
                     center:['50%','30%'],
                     radius: ['40%', '55%'],
-                    data:[
-                        {value:335, name:'机构队伍'},
-                        {value:310, name:'实有人口'},
-                        {value:234, name:'社会组织'},
-                        {value:135, name:'特殊人群'},
-                        {value:1548, name:'重点青少年'},
-                        {value:548, name:'社会治安'},
-                        {value:158, name:'矛盾纠纷排查'},
-                        {value:148, name:'校园周边安全'},
-                        {value:154, name:'护路护线'}
-                    ]
                 }
             ]
         };
-        myChart.setOption(option, true);
+        this._ajax('data.json','get',function (res) {
+            console.log(res);
+            if(res){
+                option.series[0].data = res.zongshishujucaiji.v;
+                var arr = [];
+                $.each(option.series[0].data,function (index,value) {
+                    arr.push(value.name);
+                });
+                option.legend.data = arr;
+            }else{
+                option.series.data = [];
+            }
+            myChart.setOption(option, true);
+        });
     },
 
     /*
@@ -248,8 +265,7 @@ FullScreen.prototype = {
                 y:'bottom',
                 textStyle:{
                     color:'#fff'
-                },
-                data:['事件登记','事件指派','事件处理','事件考评']
+                }
             },
             calculable : false,
             series : [
@@ -267,17 +283,24 @@ FullScreen.prototype = {
                                 show : false
                             }
                         }
-                    },
-                    data:[
-                        {value:335, name:'事件登记'},
-                        {value:310, name:'事件指派'},
-                        {value:234, name:'事件处理'},
-                        {value:135, name:'事件考评'}
-                    ]
+                    }
                 }
             ]
         };
-        myChart.setOption(option, true);
+        this._ajax('data.json','get',function (res) {
+            console.log(res);
+            if(res){
+                option.series[0].data = res.maodunjiufen.v;
+                var arr = [];
+                $.each(option.series[0].data,function (index,value) {
+                    arr.push(value.name);
+                });
+                option.legend.data = arr;
+            }else{
+                option.series.data = [];
+            }
+            myChart.setOption(option, true);
+        });
     },
 
     /*
@@ -291,6 +314,7 @@ FullScreen.prototype = {
             },
             grid:{
                 x:'5%',
+                x2:'2%',
                 y2:'10%',
                 y:46,
                 borderColor:'#053867'
@@ -310,7 +334,6 @@ FullScreen.prototype = {
                     color:'#6aa6da',
                     fontWeight:700
                 },
-                data:['政治安全稳定','经济健康发展','社会秩序','公共安全稳固','人民安居乐业']
             },
             calculable : false,
             xAxis : [
@@ -332,7 +355,6 @@ FullScreen.prototype = {
                             color: '#053867'// 使用深浅的间隔色
                         }
                     },
-                    data : ['新城区','碑林区','莲湖区','雁塔区','未央区','灞桥区','长安区','阎良区','临潼区','高陵区','鄠邑区','航天','周至县','蓝田县']
                 }
             ],
             yAxis : [
@@ -354,52 +376,33 @@ FullScreen.prototype = {
                             color: '#053867'
                         }
                     },
-                }
-            ],
-            series : [
-                {
-                    name:'政治安全稳定',
-                    type:'line',
-                    stack: '总量',
-                    symbol: 'rectangle',
-                    smooth:false,
-                    data:[520, 32, 201, 134, 90, 230, 210,1120, 132, 101, 1134, 90, 230, 210]
-                },
-                {
-                    name:'经济健康发展',
-                    type:'line',
-                    stack: '总量',
-                    symbol: 'rectangle',
-                    smooth:false,
-                    data:[1220, 182, 191, 234, 1290, 330, 310,220, 182, 191, 234, 290, 330, 310]
-                },
-                {
-                    name:'社会秩序',
-                    type:'line',
-                    stack: '总量',
-                    symbol: 'rectangle',
-                    smooth:false,
-                    data:[150, 232, 201, 154, 190, 330, 1410,220, 182, 191, 234, 290, 330, 310]
-                },
-                {
-                    name:'公共安全稳固',
-                    type:'line',
-                    stack: '总量',
-                    symbol: 'rectangle',
-                    smooth:false,
-                    data:[320, 332, 301, 334, 1390, 330, 320,320, 332, 1301, 334, 1390, 330, 320]
-                },
-                {
-                    name:'人民安居乐业',
-                    type:'line',
-                    stack: '总量',
-                    symbol: 'rectangle',
-                    smooth:false,
-                    data:[1820, 32, 901, 934, 1290, 1330, 1320,320, 332, 1301, 334, 390, 330, 320]
+                    splitArea:{
+                        show:false
+                    },
                 }
             ]
         };
-        myChart.setOption(option, true);
+        this._ajax('data.json','get',function (res) {
+            if(res){
+                option.legend.data = res.pinganding.y;
+                option.xAxis[0].data = res.pinganding.x;
+                var arr = [];
+                $.each(res.pinganding.v,function (i,v) {
+                    var obj = {
+                        type:'line',
+                        symbol: 'rectangle',
+                        smooth:false,
+                    };
+                    obj.name = option.legend.data[i];
+                    obj.data = v;
+                    arr.push(obj);
+                });
+                option.series = arr;
+            }else{
+                option.series = [];
+            }
+            myChart.setOption(option, true);
+        });
     },
 
     /*
@@ -414,14 +417,6 @@ FullScreen.prototype = {
             calculable : false,
             polar : [
                 {
-                    indicator : [
-                        {text : '刑满释放人员', max  : 100},
-                        {text : '精神病人员', max  : 100},
-                        {text : '重点青少年', max  : 100},
-                        {text : '艾滋病人员', max  : 100},
-                        {text : '矫正人员', max  : 100},
-                        {text : '吸毒人员', max  : 100}
-                    ],
                     radius : 55,
                     name: {
                         textStyle: {
@@ -442,14 +437,30 @@ FullScreen.prototype = {
                     },
                     data : [
                         {
-                            value : [97, 42, 88, 94, 90, 86],
-                            name : '舍普琴科'
+                            name : '人员分类'
                         }
                     ]
                 }
             ]
         };
-        myChart.setOption(option, true);
+        this._ajax('data.json','get',function (res) {
+            console.log(res);
+            if(res){
+                option.series[0].data[0].value = res.renyuanguankong.v;
+                var arr = [];
+                $.each(res.renyuanguankong.x,function (index,value) {
+                    var obj = {
+                        max:100
+                    }
+                    obj.text = value;
+                    arr.push(obj);
+                });
+                option.polar[0].indicator = arr;
+            }else{
+                option.series.data = [];
+            }
+            myChart.setOption(option, true);
+        });
     },
 
     /*
@@ -468,8 +479,7 @@ FullScreen.prototype = {
                 y:'bottom',
                 textStyle:{
                     color:'#fff'
-                },
-                data:['快捷报警','视频报警','消息报警','一键求助']
+                }
             },
             calculable : false,
             series : [
@@ -498,18 +508,24 @@ FullScreen.prototype = {
                                 show : true
                             }
                         }
-                    },
-                    data:[
-                        {value:10, name:'快捷报警'},
-                        {value:5, name:'视频报警'},
-                        {value:15, name:'消息报警'},
-                        {value:25, name:'一键求助'}
-                    ]
+                    }
                 }
             ]
         };
-
-        myChart.setOption(option, true);
+        this._ajax('data.json','get',function (res) {
+            console.log(res);
+            if(res){
+                option.series[0].data = res.bianminfuwu.v;
+                var arr = [];
+                $.each(option.series[0].data,function (index,value) {
+                    arr.push(value.name);
+                });
+                option.legend.data = arr;
+            }else{
+                option.series.data = [];
+            }
+            myChart.setOption(option, true);
+        });
     },
 
     /*
@@ -527,13 +543,30 @@ FullScreen.prototype = {
             $('.rightBottomItems').css('borderTop','3px solid rgba(2,29,40,0.7)');
             $(this).css('borderTop','3px solid #f9e600');
             if(this.innerHTML === '便民服务'){
-                $('#poepleservice').slideDown();
-                $('#complexcontrol').slideUp();
+                $('#poepleservice').show();
+                $('#complexcontrol').hide();
             }else{
-                $('#complexcontrol').slideDown();
-                $('#poepleservice').slideUp();
+                $('#complexcontrol').show();
+                $('#poepleservice').hide();
             }
         })
+    },
+
+    /*
+    * 中间底部当月区县考核 市局部门考核切换
+    * */
+    areaToDivision: function () {
+        $('.kaoHe').click(function () {
+            $('.kaoHe').css('boxShadow','');
+            $(this).css('boxShadow','0px 0px 5px #f9e600 inset');
+            if(this.innerHTML === '当月区县考核'){
+                $('#peacetripod').show();
+                $('#bumen').hide();
+            }else{
+                $('#bumen').show();
+                $('#peacetripod').hide();
+            }
+        });
     }
 };
 
