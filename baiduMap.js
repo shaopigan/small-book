@@ -202,7 +202,13 @@ FullScreen.prototype = {
                     itemStyle : {
                         normal : {
                             label : {
-                                show : false
+                                show : false,
+                                formatter : function (params){
+                                    return 100 - params.value + '%'
+                                },
+                                textStyle: {
+                                    baseline : 'top'
+                                }
                             },
                             labelLine : {
                                 show : false
@@ -257,7 +263,7 @@ FullScreen.prototype = {
         var option = {
             tooltip : {
                 trigger: 'item',
-                formatter: "{a} <br/>{b} : {c} ({d}%)"
+                formatter: "{b} :<br/> {c} ({d}%)"
             },
             legend: {
                 orient: 'horizontal',
@@ -268,9 +274,10 @@ FullScreen.prototype = {
                 }
             },
             calculable : false,
+            // color:['rgba(0,0,0,1)', 'green','yellow','blueviolet'],
             series : [
                 {
-                    name:'访问来源',
+                    // name:'访问来源',
                     type:'pie',
                     center:['50%','40%'],
                     radius : '55%',
@@ -409,7 +416,7 @@ FullScreen.prototype = {
     * 重点人员管控vipcontrol
     * */
     showVipControl: function () {
-        var myChart = echarts.init(document.getElementById('vipcontrol'),'macarons');
+        var myChart = echarts.init(document.getElementById('vipcontrol'),'default');
         var option = {
             tooltip : {
                 trigger: 'axis'
@@ -471,7 +478,7 @@ FullScreen.prototype = {
         var option = {
             tooltip : {
                 trigger: 'item',
-                formatter: "{a} <br/>{b} : {c} ({d}%)"
+                formatter: "{b} :<br/> {c} ({d}%)"
             },
             legend: {
                 orient: 'horizontal',
@@ -500,14 +507,14 @@ FullScreen.prototype = {
                                 show : false
                             }
                         },
-                        emphasis : {
+                        /*emphasis : {
                             label : {
                                 show : true
                             },
                             labelLine : {
                                 show : true
                             }
-                        }
+                        }*/
                     }
                 }
             ]
