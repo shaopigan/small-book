@@ -506,15 +506,7 @@ FullScreen.prototype = {
                             labelLine : {
                                 show : false
                             }
-                        },
-                        /*emphasis : {
-                            label : {
-                                show : true
-                            },
-                            labelLine : {
-                                show : true
-                            }
-                        }*/
+                        }
                     }
                 }
             ]
