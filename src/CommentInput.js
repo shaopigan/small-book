@@ -23,7 +23,7 @@ class CommentInput extends React.Component{
                 username:username
             })
         }else{
-            alert('local里username无数据');
+            // alert('local里username无数据');
         }
     }
 
