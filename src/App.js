@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import CommentApp from './CommentApp';
 import PercentageApp from './PercentageApp';
 import DelMountOrder from './DelMountOrder';
+import TenTime from './TenTime';
 import {Layout, Rate, Menu, Icon} from 'antd';
 import './App.css';
 
@@ -64,7 +65,7 @@ class App extends Component {
                             </div>
                         </Sider>
                         <Content>
-                            <Rate/>
+                            <TenTime/>
                             <CommentApp />
                             <PercentageApp/>
                             <DelMountOrder/>
