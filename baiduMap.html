@@ -30,8 +30,7 @@
         .items {
             height: 80px;
             width: 100%;
-            background: #021d28;
-            opacity: 0.7;
+            background: rgba(2,29,40,0.7);
             display: flex;
             justify-content: flex-end;
             flex-direction: column;
@@ -94,7 +93,7 @@
             position: absolute;
             top: 80px;
             left: 285px;
-            width: 120px;
+            width: 170px;
             height: 360px;
             display: flex;
             flex-direction: column;
@@ -112,6 +111,12 @@
             color: #f9e600;
             display: flex;
             justify-content: space-around
+        }
+        .midButtom {
+            position: absolute;
+            bottom: 0;
+            background: rgba(2,29,40,0.7);
+            height: 280px;
         }
     </style>
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=3.0&ak=SBpohKPOmcEdDU0mDNaClH47EvFUTi9K"></script>
@@ -153,31 +158,34 @@
         </div>
         <div class="topMiddle4">
             <div class="items">
-                <div>特殊人群</div>
+                <div>当前特殊人群(人)</div>
                 <span id="specialPopu"></span>
             </div>
             <div class="items">
-                <div>重点青少年</div>
+                <div>当前重点青少年(人)</div>
                 <span id="teenCount"></span>
             </div>
             <div class="items">
-                <div>社会治安</div>
+                <div>当月社会治安案件数(件)</div>
                 <span id="publicSecurity"></span>
             </div>
             <div class="items">
-                <div>矛盾纠纷</div>
+                <div>矛盾纠纷调解率</div>
                 <span id="dispute"></span>
             </div>
         </div>
-        <div style="position: absolute;bottom: 0;left: 285px;background: #021d28;opacity: 0.7;width: 1350px;height: 280px;">
-            <span class="kaoHe" style="left: 130px;box-shadow: 0px 0px 5px #f9e600 inset">当月区县考核</span>
-            <span class="kaoHe" style="left: 230px;">市级部门考核</span>
-            <div style="height: 280px;width: 1350px;display: block" id="peacetripod"></div>
-            <div style="height: 280px;width: 1350px;display: none" id="bumen"></div>
+        <div class="midButtom" style="left: 285px;width: 950px;">
+            <span class="kaoHe" style="left: 130px;">当月区县考核</span>
+            <!--<span class="kaoHe" style="left: 230px;box-shadow: 0px 0px 5px #f9e600 inset">市级部门考核</span>-->
+            <div style="height: 280px;width: 950px;" id="peacetripod"></div>
+        </div>
+        <div class="midButtom" style="left: 1255px;width: 380px;" id="bumen">
+            <h4>考核指标细则排名扣分前五</h4>
+            <div id="topFive" style="width: 380px;height: 240px"></div>
         </div>
         <div style="height:1000px;position: absolute;right: 20px;bottom: 0;display: flex;flex-direction: column;justify-content: space-between">
             <div class="rightchart smCharts">
-                <h4 style="text-align: left">重点人员管控</h4>
+                <h4 style="text-align: left">综治关注人员管控</h4>
                 <div id="vipcontrol" style="width: 100%;height: 280px"></div>
                 <h4 class="topRightH4"><span style="line-height: 33px">今日预警数</span><span id="todayAlermNum" class="alarmFont"></span></h4>
                 <h4 class="topRightH4"><span style="line-height: 33px">其中：一级预警</span><span id="topAlerm" class="alarmFont"></span></h4>

@@ -1,11 +1,12 @@
 function FullScreen() {
     this._init();
     this.serviceToControl();
-    this.areaToDivision();
+    // this.areaToDivision();
 }
 
 FullScreen.prototype = {
     IP : 'http://172.20.36.123:8100',
+    IP1 : 'http://172.20.36.34:8100',
     /*
     * ajax封装
     * */
@@ -32,6 +33,7 @@ FullScreen.prototype = {
         this.showTangle();
         this.showMiddleFour();
         this.showPeaceTripod();
+        this.showTopFive();
         this.showVipControl();
         this.showPoepleService();
         this.showComplexControl();
@@ -329,11 +331,12 @@ FullScreen.prototype = {
     * */
     showMiddleFour:function () {
         this._ajax(this.IP+'/dashboard/findDataList','get',function (res) {
+        // this._ajax('http://172.20.36.34:8100/dashboard/findMonthTestData','get',function (res) {
             console.log(res);
             $('#teenCount').text(res.v[1].value);
             $('#publicSecurity').text(res.v[3].value);
             $('#specialPopu').text(res.v[2].value);
-            $('#dispute').text(res.v[0].value);
+            $('#dispute').text(res.v[0].value+'%');
         })
     },
 
@@ -341,15 +344,115 @@ FullScreen.prototype = {
     * 平安鼎考核peacetripod
     * */
     showPeaceTripod :function () {
-        var myChart = echarts.init(document.getElementById('peacetripod'),'macarons');
+        $.ajax({
+            url:'http://172.20.36.34:8100/dashboard/findMonthTestData',
+            type:'get',
+            success:function (res) {
+                if(res){
+                    var myChart = echarts.init(document.getElementById('peacetripod'),'macarons');
+                    var option = {
+                        grid:{
+                            x:'5%',
+                            x2:'2%',
+                            y2:'20%',
+                            y:46,
+                            borderColor:'#053867'
+                        },
+                        title:{
+                            text: '平安鼎考核',
+                            padding:10,
+                            textStyle:{
+                                color:'#fff'
+                            }
+                        },
+                        tooltip : {
+                            trigger: 'axis'
+                        },
+                        calculable : true,
+                        xAxis : [
+                            {
+                                type : 'category',
+                                axisLabel: {
+                                    interval:0,
+                                    rotate:45,
+                                    margin:1,
+                                    textStyle: {
+                                        color: "#6aa6da" //刻度线标签颜色
+                                    },
+                                },
+                                axisLine:{
+                                    lineStyle:{
+                                        color:'#053867', //X轴颜色
+                                    }
+                                },
+                                splitLine: {
+                                    lineStyle: {
+                                        color: '#053867'// 使用深浅的间隔色
+                                    }
+                                },
+                                data : res.x
+                            }
+                        ],
+                        yAxis : [
+                            {
+                                type : 'value',
+                                axisLabel: {
+                                    textStyle: {
+                                        color: "#6aa6da" //刻度线标签颜色
+                                    }
+                                },
+                                axisLine:{
+                                    lineStyle:{
+                                        color:'#053867', //X轴颜色
+                                    }
+                                },
+                                splitLine: {
+                                    lineStyle: {
+                                        // 使用深浅的间隔色
+                                        color: '#053867'
+                                    }
+                                },
+                                splitArea:{
+                                    show:false
+                                },
+                            }
+                        ],
+                        series : [
+                            {
+                                type:'bar',
+                                itemStyle: {
+                                    normal: {
+                                        color: function(params) {
+                                            // build a color map as your need.
+                                            var colorList = [
+                                                '#C1232B','#B5C334','#FCCE10','#E87C25','#27727B','#FAD860','#9BCA63',
+                                                '#FE8463','#9BCA63','#FAD860','#F3A43B','#60C0DD','#F4E001','#F4E001',
+                                                '#D7504B','#C6E579','#F4E001','#F0805A','#26C0C0','#FE8463','#27727B'
+                                            ];
+                                            return colorList[params.dataIndex]
+                                        },
+                                    }
+                                },
+                                data:res.v[0]
+                            }
+                        ]
+                    };
+                    myChart.setOption(option, true);
+                }
+            },
+            error:function () {
+
+            }
+        });
+        /*var myChart = echarts.init(document.getElementById('peacetripod'),'macarons');
         var option = {
-            tooltip : {
+            tooltip: {
                 trigger: 'axis'
             },
             grid:{
                 x:'5%',
                 x2:'2%',
-                y2:'10%',
+                y2:'20%',
                 y:46,
                 borderColor:'#053867'
             },
@@ -361,20 +464,15 @@ FullScreen.prototype = {
                 }
             },
             legend: {
-                orient: 'horizontal',
-                x: 'right',
-                padding:15,
-                textStyle:{
-                    color:'#6aa6da',
-                    fontWeight:700
-                },
+                show:false
             },
-            calculable : false,
+            calculable : true,
             xAxis : [
                 {
                     type : 'category',//category
-                    boundaryGap : false,
                     axisLabel: {
+                        interval:0,
+                        rotate:45,
                         textStyle: {
                             color: "#6aa6da" //刻度线标签颜色
                         },
@@ -388,7 +486,7 @@ FullScreen.prototype = {
                         lineStyle: {
                             color: '#053867'// 使用深浅的间隔色
                         }
-                    },
+                    }
                 }
             ],
             yAxis : [
@@ -414,33 +512,90 @@ FullScreen.prototype = {
                         show:false
                     },
                 }
+            ],
+            series : [
+                {
+                    type:'bar'
+                    /!*itemStyle: {
+                        normal: {
+                            color: function(params) {
+                                // build a color map as your need.
+                                var colorList = [
+                                    '#C1232B','#B5C334','#FCCE10','#E87C25','#27727B','#FAD860','#9BCA63',
+                                    '#FE8463','#9BCA63','#FAD860','#F3A43B','#60C0DD','#F4E001','#F4E001',
+                                    '#D7504B','#C6E579','#F4E001','#F0805A','#26C0C0','#FE8463','#27727B'
+                                ];
+                                return colorList[params.dataIndex]
+                            },
+                        }
+                    }*!/
+                }
             ]
         };
-        this._ajax(this.IP+'/dashboard/findMonthTestData','get',function (res) {
+
+        this._ajax(this.IP1+'/dashboard/findMonthTestData','get',function (res) {
+            console.log(res);
             if(res){
-                option.legend.data = res.y;
+                option.series[0].data = res.v[0];
                 option.xAxis[0].data = res.x;
-                var arr = [];
-                $.each(res.v,function (i,v) {
-                    var obj = {
-                        type:'line',
-                        symbol: 'rectangle',
-                        smooth:false,
-                    };
-                    obj.name = option.legend.data[i];
-                    obj.data = v;
-                    arr.push(obj);
-                });
-                option.series = arr;
             }else{
-                option.series = [];
+                option.series.data = [];
             }
             myChart.setOption(option, true);
-        });
+        });*/
     },
 
     /*
-    * 重点人员管控vipcontrol
+    * 考核指标细则排名扣分前五 topFive
+    * */
+    showTopFive: function(){
+        var myChart = echarts.init(document.getElementById('topFive'),'macarons');
+        var option = {
+            tooltip : {
+                trigger: 'item',
+                formatter: "{b} :<br/> {c} ({d}%)"
+            },
+            legend: {
+                orient: 'horizontal',
+                x: 'center',
+                y:'bottom',
+                textStyle:{
+                    color:'#fff'
+                },
+                data:["政治安全稳定","经济健康发展","社会秩序","公共安全稳固","人民安居乐业"]
+            },
+            calculable : false,
+            series : [
+                {
+                    // name:'访问来源',
+                    type:'pie',
+                    center:['50%','40%'],
+                    radius : '55%',
+                    itemStyle : {
+                        normal : {
+                            label : {
+                                show : false
+                            },
+                            labelLine : {
+                                show : false
+                            }
+                        }
+                    },
+                    data:[
+                        {value:335, name:'政治安全稳定'},
+                        {value:310, name:'经济健康发展'},
+                        {value:234, name:'社会秩序'},
+                        {value:135, name:'公共安全稳固'},
+                        {value:1548, name:'人民安居乐业'}
+                    ]
+                }
+            ]
+        };
+        myChart.setOption(option, true);
+    },
+
+    /*
+    * 综治关注人员管控vipcontrol
     * */
     showVipControl: function () {
         var myChart = echarts.init(document.getElementById('vipcontrol'),'default');
@@ -583,7 +738,7 @@ FullScreen.prototype = {
     /*
     * 中间底部当月区县考核 市局部门考核切换
     * */
-    areaToDivision: function () {
+    /*areaToDivision: function () {
         $('.kaoHe').click(function () {
             $('.kaoHe').css('boxShadow','');
             $(this).css('boxShadow','0px 0px 5px #f9e600 inset');
@@ -595,7 +750,7 @@ FullScreen.prototype = {
                 $('#peacetripod').hide();
             }
         });
-    },
+    },*/
 
     /*
     * 时钟
@@ -610,7 +765,7 @@ FullScreen.prototype = {
             let m = now.getMinutes()<10?'0'+now.getMinutes():now.getMinutes();
             let s = now.getSeconds()<10?'0'+now.getSeconds():now.getSeconds();
             timeStr1 = y+'.'+M+'.'+d;
-            timeStr2 = h+'.'+m+'.'+s;
+            timeStr2 = h+':'+m+':'+s;
             $('.headerTime>span:eq(0)').text(timeStr1);
             $('.headerTime>span:eq(1)').text(timeStr2);
         },1000);
