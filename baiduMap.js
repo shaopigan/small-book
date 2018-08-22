@@ -5,6 +5,7 @@ function FullScreen() {
 }
 
 FullScreen.prototype = {
+    IP : 'http://172.20.36.123:8100',
     /*
     * ajax封装
     * */
@@ -29,10 +30,12 @@ FullScreen.prototype = {
         this.showDataPick();
         this.showPeacElement();
         this.showTangle();
+        this.showMiddleFour();
         this.showPeaceTripod();
         this.showVipControl();
         this.showPoepleService();
         this.showComplexControl();
+        this.clock();
     },
     
     /*
@@ -232,10 +235,10 @@ FullScreen.prototype = {
                 }
             ]
         };
-        this._ajax('data.json','get',function (res) {
+        this._ajax(this.IP+'/dashboard/findComprehensiveTreatmentData','get',function (res) {
             console.log(res);
             if(res){
-                option.series[0].data = res.zongshishujucaiji.v;
+                option.series[0].data = res.v;
                 var arr = [];
                 $.each(option.series[0].data,function (index,value) {
                     arr.push(value.name);
@@ -252,7 +255,18 @@ FullScreen.prototype = {
     * 平安元素peacelement
     * */
     showPeacElement:function(){
+        this._ajax(this.IP+'/dashboard/findSafeElement','get',function (res) {
+            console.log(res);
+            var html
+            $.each(res.v,function (i,ivalue) {
+                let inum = i+1;
+                html += '<tr>';
+                html += '<td style="width: 33px">'+inum+'<td style="width: 96px">'+ivalue.name+'</td>'+'<td style="width: 97px">'+ivalue.value+'</td>';
+                html += '</tr>';
+            });
 
+            $('#safeTbody').append(html);
+        })
     },
 
     /*
@@ -294,10 +308,10 @@ FullScreen.prototype = {
                 }
             ]
         };
-        this._ajax('data.json','get',function (res) {
+        this._ajax(this.IP+'/dashboard/findDisputeCount','get',function (res) {
             console.log(res);
             if(res){
-                option.series[0].data = res.maodunjiufen.v;
+                option.series[0].data = res.v;
                 var arr = [];
                 $.each(option.series[0].data,function (index,value) {
                     arr.push(value.name);
@@ -308,6 +322,19 @@ FullScreen.prototype = {
             }
             myChart.setOption(option, true);
         });
+    },
+
+    /*
+    * 特殊人群、重点青少年、社会治安、矛盾纠纷
+    * */
+    showMiddleFour:function () {
+        this._ajax(this.IP+'/dashboard/findDataList','get',function (res) {
+            console.log(res);
+            $('#teenCount').text(res.v[1].value);
+            $('#publicSecurity').text(res.v[3].value);
+            $('#specialPopu').text(res.v[2].value);
+            $('#dispute').text(res.v[0].value);
+        })
     },
 
     /*
@@ -389,12 +416,12 @@ FullScreen.prototype = {
                 }
             ]
         };
-        this._ajax('data.json','get',function (res) {
+        this._ajax(this.IP+'/dashboard/findMonthTestData','get',function (res) {
             if(res){
-                option.legend.data = res.pinganding.y;
-                option.xAxis[0].data = res.pinganding.x;
+                option.legend.data = res.y;
+                option.xAxis[0].data = res.x;
                 var arr = [];
-                $.each(res.pinganding.v,function (i,v) {
+                $.each(res.v,function (i,v) {
                     var obj = {
                         type:'line',
                         symbol: 'rectangle',
@@ -450,12 +477,12 @@ FullScreen.prototype = {
                 }
             ]
         };
-        this._ajax('data.json','get',function (res) {
+        this._ajax(this.IP+'/dashboard/findKeyPersonnel','get',function (res) {
             console.log(res);
             if(res){
-                option.series[0].data[0].value = res.renyuanguankong.v;
+                option.series[0].data[0].value = res.v;
                 var arr = [];
-                $.each(res.renyuanguankong.x,function (index,value) {
+                $.each(res.x,function (index,value) {
                     var obj = {
                         max:100
                     }
@@ -467,6 +494,8 @@ FullScreen.prototype = {
                 option.series.data = [];
             }
             myChart.setOption(option, true);
+            $('#todayAlermNum').text(res.y[0].value);
+            $('#topAlerm').text(res.y[1].value);
         });
     },
 
@@ -511,10 +540,10 @@ FullScreen.prototype = {
                 }
             ]
         };
-        this._ajax('data.json','get',function (res) {
+        this._ajax(this.IP+'/dashboard/findConvenienceServices','get',function (res) {
             console.log(res);
             if(res){
-                option.series[0].data = res.bianminfuwu.v;
+                option.series[0].data = res.v;
                 var arr = [];
                 $.each(option.series[0].data,function (index,value) {
                     arr.push(value.name);
@@ -566,6 +595,25 @@ FullScreen.prototype = {
                 $('#peacetripod').hide();
             }
         });
+    },
+
+    /*
+    * 时钟
+    * */
+    clock :function () {
+        setInterval(function () {
+            let now = new Date(); // 得到当前时间
+            let y = now.getFullYear();
+            let M = now.getMonth()+1;
+            let d = now.getDate();
+            let h = now.getHours()<10?'0'+now.getHours():now.getHours();
+            let m = now.getMinutes()<10?'0'+now.getMinutes():now.getMinutes();
+            let s = now.getSeconds()<10?'0'+now.getSeconds():now.getSeconds();
+            timeStr1 = y+'.'+M+'.'+d;
+            timeStr2 = h+'.'+m+'.'+s;
+            $('.headerTime>span:eq(0)').text(timeStr1);
+            $('.headerTime>span:eq(1)').text(timeStr2);
+        },1000);
     }
 };
 
