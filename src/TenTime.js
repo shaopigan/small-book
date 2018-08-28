@@ -23,7 +23,9 @@ class TenTime extends React.Component{
     }
 
     handleReturn(){
-        this.state.time = 0;
+        this.setState({
+            time : 0
+        });
         clearInterval(this.timer);
     }
 
