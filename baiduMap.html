@@ -93,7 +93,7 @@
             position: absolute;
             top: 80px;
             left: 285px;
-            width: 170px;
+            width: 185px;
             height: 360px;
             display: flex;
             flex-direction: column;
@@ -131,74 +131,105 @@
             <span></span>
         </div>
     </div>
-        <div style="height:1000px;position: absolute;left: 20px;bottom: 0;display: flex;flex-direction: column;justify-content: space-between">
-            <div class="leftchart smCharts">
-                <h4 style="text-align: left;">综治数据采集</h4>
-                <div style="width: 100%;height: 275px;overflow: hidden" id="datapick"></div>
-            </div>
-            <div class="leftchart smCharts">
-                <h4 style="text-align: left">平安元素</h4>
-                <div style="width: 100%;height: 275px;overflow: hidden;padding: 4px 8px" id="peacelement">
-                    <table class="table table-bordered table-striped" style="color: #6aa6da;font-weight: 700;width: 100%">
-                        <thead>
-                            <tr style="display: block;width: 100%">
-                                <td style="width: 33px"></td>
-                                <td style="width: 87px">类别</td>
-                                <td style="width: 106px">数量</td>
-                            </tr>
-                        </thead>
-                        <tbody id="safeTbody" style="display:block;height: 230px;overflow: auto"></tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="leftchart smCharts">
-                <h4 style="text-align: left">矛盾纠纷</h4>
-                <div style="width: 100%;height: 275px;overflow: hidden" id="tangle"></div>
+    <div style="height:1000px;position: absolute;left: 20px;bottom: 0;display: flex;flex-direction: column;justify-content: space-between">
+        <div class="leftchart smCharts">
+            <h4 style="text-align: left;">综治数据采集</h4>
+            <div style="width: 100%;height: 275px;overflow: hidden" id="datapick"></div>
+        </div>
+        <div class="leftchart smCharts">
+            <h4 style="text-align: left">平安元素</h4>
+            <div style="width: 100%;height: 275px;overflow: hidden;padding: 4px 8px" id="peacelement">
+                <table class="table table-bordered table-striped" style="color: #6aa6da;font-weight: 700;width: 100%">
+                    <thead>
+                        <tr style="display: block;width: 100%">
+                            <td style="width: 36px"></td>
+                            <td style="width: 106px">类别</td>
+                            <td style="width: 107px">数量</td>
+                        </tr>
+                    </thead>
+                    <tbody id="safeTbody" style="display:block;height: 230px;overflow: auto">
+                        <tr>
+                            <td style="width: 34px">1</td>
+                            <td style="width: 96px">便民服务</td>
+                            <td style="width: 97px">29</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 34px">2</td>
+                            <td style="width: 96px">公共厕所</td>
+                            <td style="width: 97px">16</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 34px">3</td>
+                            <td style="width: 96px">党政机关</td>
+                            <td style="width: 97px">8</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 34px">4</td>
+                            <td style="width: 96px">停车场</td>
+                            <td style="width: 97px">42</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 34px">5</td>
+                            <td style="width: 96px">公安</td>
+                            <td style="width: 97px">14</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 34px">6</td>
+                            <td style="width: 96px">公证处</td>
+                            <td style="width: 97px">37</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
-        <div class="topMiddle4">
-            <div class="items">
-                <div>当前特殊人群(人)</div>
-                <span id="specialPopu"></span>
-            </div>
-            <div class="items">
-                <div>当前重点青少年(人)</div>
-                <span id="teenCount"></span>
-            </div>
-            <div class="items">
-                <div>当月社会治安案件数(件)</div>
-                <span id="publicSecurity"></span>
-            </div>
-            <div class="items">
-                <div>矛盾纠纷调解率</div>
-                <span id="dispute"></span>
-            </div>
+        <div class="leftchart smCharts">
+            <h4 style="text-align: left">矛盾纠纷</h4>
+            <div style="width: 100%;height: 275px;overflow: hidden" id="tangle"></div>
         </div>
-        <div class="midButtom" style="left: 285px;width: 950px;">
-            <span class="kaoHe" style="left: 130px;">当月区县考核</span>
-            <!--<span class="kaoHe" style="left: 230px;box-shadow: 0px 0px 5px #f9e600 inset">市级部门考核</span>-->
-            <div style="height: 280px;width: 950px;" id="peacetripod"></div>
+    </div>
+    <div class="topMiddle4">
+        <div class="items">
+            <div>西安市目前特殊人群(人)</div>
+            <span id="specialPopu">641</span>
         </div>
-        <div class="midButtom" style="left: 1255px;width: 380px;" id="bumen">
-            <h4>考核指标细则排名扣分前五</h4>
-            <div id="topFive" style="width: 380px;height: 240px"></div>
+        <div class="items">
+            <div>西安市目前重点青少年(人)</div>
+            <span id="teenCount">204</span>
         </div>
-        <div style="height:1000px;position: absolute;right: 20px;bottom: 0;display: flex;flex-direction: column;justify-content: space-between">
-            <div class="rightchart smCharts">
-                <h4 style="text-align: left">综治关注人员管控</h4>
-                <div id="vipcontrol" style="width: 100%;height: 280px"></div>
-                <h4 class="topRightH4"><span style="line-height: 33px">今日预警数</span><span id="todayAlermNum" class="alarmFont"></span></h4>
-                <h4 class="topRightH4"><span style="line-height: 33px">其中：一级预警</span><span id="topAlerm" class="alarmFont"></span></h4>
+        <div class="items">
+            <div>西安市社会案件数(件/月)</div>
+            <span id="publicSecurity">341</span>
+        </div>
+        <div class="items">
+            <div>矛盾纠纷调解率(月)</div>
+            <span id="dispute">85%</span>
+        </div>
+    </div>
+    <div class="midButtom" style="left: 285px;width: 950px;">
+        <span class="kaoHe" style="left: 130px;">当月区县考核</span>
+        <!--<span class="kaoHe" style="left: 230px;box-shadow: 0px 0px 5px #f9e600 inset">市级部门考核</span>-->
+        <div style="height: 280px;width: 950px;" id="peacetripod"></div>
+    </div>
+    <div class="midButtom" style="left: 1255px;width: 380px;" id="bumen">
+        <h4>考核指标细则排名扣分前五</h4>
+        <div id="topFive" style="width: 380px;height: 240px"></div>
+    </div>
+    <div style="height:1000px;position: absolute;right: 20px;bottom: 0;display: flex;flex-direction: column;justify-content: space-between">
+        <div class="rightchart smCharts">
+            <h4 style="text-align: left">综治关注人员管控</h4>
+            <div id="vipcontrol" style="width: 100%;height: 280px"></div>
+            <h4 class="topRightH4"><span style="line-height: 33px">今日预警数</span><span id="todayAlermNum" class="alarmFont">214</span></h4>
+            <h4 class="topRightH4"><span style="line-height: 33px">其中：一级预警</span><span id="topAlerm" class="alarmFont">73</span></h4>
+        </div>
+        <div class="rightchart smCharts">
+            <div style="display: flex;justify-content: space-around;text-align: center">
+                <div class="rightBottomItems" style="border-top: 3px solid #f9e600">便民服务</div>
+                <div class="rightBottomItems">综治防控</div>
             </div>
-            <div class="rightchart smCharts">
-                <div style="display: flex;justify-content: space-around;text-align: center">
-                    <div class="rightBottomItems" style="border-top: 3px solid #f9e600">便民服务</div>
-                    <div class="rightBottomItems">综治防控</div>
-                </div>
-                <div style="width: 100%;height: 380px;display: block" id="poepleservice"></div>
-                <div style="width: 100%;height: 380px;display: none" id="complexcontrol"></div>
-            </div>
+            <div style="width: 100%;height: 380px;display: block" id="poepleservice"></div>
+            <div style="width: 100%;height: 380px;display: none" id="complexcontrol"></div>
         </div>
+    </div>
     <script type="text/javascript" src="./echarts-all.js"></script>
     <script type="text/javascript" src="./baiduMap.js"></script>
 </body>

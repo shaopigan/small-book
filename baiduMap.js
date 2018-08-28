@@ -201,6 +201,7 @@ FullScreen.prototype = {
                 textStyle:{
                     color:'#fff'
                 },
+                data:["机构队伍", "实有人口", "社会组织", "特殊人群", "重点青少年", "社会治安", "矛盾纠纷排查", "校园周边安全", "护路护线"]
             },
             series: [
                 {
@@ -234,10 +235,22 @@ FullScreen.prototype = {
                     type:'pie',
                     center:['50%','30%'],
                     radius: ['40%', '55%'],
+                    data:[
+                        {"value":335, "name":"机构队伍"},
+                        {"value":310, "name":"实有人口"},
+                        {"value":234, "name":"社会组织"},
+                        {"value":135, "name":"特殊人群"},
+                        {"value":1548,"name":"重点青少年"},
+                        {"value":548, "name":"社会治安"},
+                        {"value":158, "name":"矛盾纠纷排查"},
+                        {"value":148, "name":"校园周边安全"},
+                        {"value":154, "name":"护路护线"}
+                    ]
                 }
             ]
         };
-        this._ajax(this.IP+'/dashboard/findComprehensiveTreatmentData','get',function (res) {
+        myChart.setOption(option, true);
+        /*this._ajax(this.IP+'/dashboard/findComprehensiveTreatmentData','get',function (res) {
             console.log(res);
             if(res){
                 option.series[0].data = res.v;
@@ -250,14 +263,14 @@ FullScreen.prototype = {
                 option.series.data = [];
             }
             myChart.setOption(option, true);
-        });
+        });*/
     },
 
     /*
     * 平安元素peacelement
     * */
     showPeacElement:function(){
-        this._ajax(this.IP+'/dashboard/findSafeElement','get',function (res) {
+        /*this._ajax(this.IP+'/dashboard/findSafeElement','get',function (res) {
             console.log(res);
             var html
             $.each(res.v,function (i,ivalue) {
@@ -268,7 +281,7 @@ FullScreen.prototype = {
             });
 
             $('#safeTbody').append(html);
-        })
+        })*/
     },
 
     /*
@@ -287,7 +300,8 @@ FullScreen.prototype = {
                 y:'bottom',
                 textStyle:{
                     color:'#fff'
-                }
+                },
+                data:["事件登记","事件指派","事件处理","事件考评"]
             },
             calculable : false,
             // color:['rgba(0,0,0,1)', 'green','yellow','blueviolet'],
@@ -306,11 +320,18 @@ FullScreen.prototype = {
                                 show : false
                             }
                         }
-                    }
+                    },
+                    data:[
+                        {"value":1335, "name":"事件登记"},
+                        {"value":310, "name":"事件指派"},
+                        {"value":234, "name":"事件处理"},
+                        {"value":135, "name":"事件考评"}
+                    ]
                 }
             ]
         };
-        this._ajax(this.IP+'/dashboard/findDisputeCount','get',function (res) {
+        myChart.setOption(option, true);
+        /*this._ajax(this.IP+'/dashboard/findDisputeCount','get',function (res) {
             console.log(res);
             if(res){
                 option.series[0].data = res.v;
@@ -323,28 +344,28 @@ FullScreen.prototype = {
                 option.series.data = [];
             }
             myChart.setOption(option, true);
-        });
+        });*/
     },
 
     /*
     * 特殊人群、重点青少年、社会治安、矛盾纠纷
     * */
     showMiddleFour:function () {
-        this._ajax(this.IP+'/dashboard/findDataList','get',function (res) {
+        /*this._ajax(this.IP+'/dashboard/findDataList','get',function (res) {
         // this._ajax('http://172.20.36.34:8100/dashboard/findMonthTestData','get',function (res) {
             console.log(res);
             $('#teenCount').text(res.v[1].value);
             $('#publicSecurity').text(res.v[3].value);
             $('#specialPopu').text(res.v[2].value);
             $('#dispute').text(res.v[0].value+'%');
-        })
+        })*/
     },
 
     /*
     * 平安鼎考核peacetripod
     * */
     showPeaceTripod :function () {
-        $.ajax({
+        /*$.ajax({
             url:'http://172.20.36.34:8100/dashboard/findMonthTestData',
             type:'get',
             success:function (res) {
@@ -443,12 +464,9 @@ FullScreen.prototype = {
             error:function () {
 
             }
-        });
-        /*var myChart = echarts.init(document.getElementById('peacetripod'),'macarons');
+        });*/
+        var myChart = echarts.init(document.getElementById('peacetripod'),'macarons');
         var option = {
-            tooltip: {
-                trigger: 'axis'
-            },
             grid:{
                 x:'5%',
                 x2:'2%',
@@ -463,16 +481,17 @@ FullScreen.prototype = {
                     color:'#fff'
                 }
             },
-            legend: {
-                show:false
+            tooltip : {
+                trigger: 'axis'
             },
             calculable : true,
             xAxis : [
                 {
-                    type : 'category',//category
+                    type : 'category',
                     axisLabel: {
                         interval:0,
                         rotate:45,
+                        margin:1,
                         textStyle: {
                             color: "#6aa6da" //刻度线标签颜色
                         },
@@ -486,12 +505,13 @@ FullScreen.prototype = {
                         lineStyle: {
                             color: '#053867'// 使用深浅的间隔色
                         }
-                    }
+                    },
+                    data : ["新城区","碑林区","莲湖区","雁塔区","未央区","灞桥区","长安区","阎良区","临潼区","高陵区","鄠邑区","西咸新区","周至县","蓝田县","浐灞生态区","港务区","高新区","航空基地","航天基地","经开区","曲江新区"]
                 }
             ],
             yAxis : [
                 {
-                    type : 'value',//value
+                    type : 'value',
                     axisLabel: {
                         textStyle: {
                             color: "#6aa6da" //刻度线标签颜色
@@ -515,8 +535,8 @@ FullScreen.prototype = {
             ],
             series : [
                 {
-                    type:'bar'
-                    /!*itemStyle: {
+                    type:'bar',
+                    itemStyle: {
                         normal: {
                             color: function(params) {
                                 // build a color map as your need.
@@ -528,21 +548,12 @@ FullScreen.prototype = {
                                 return colorList[params.dataIndex]
                             },
                         }
-                    }*!/
+                    },
+                    data:[920, 932, 901, 934, 990, 930, 910,920, 932, 901, 934, 990, 930, 910, 932, 901, 934, 901, 930, 910,920]
                 }
             ]
         };
-
-        this._ajax(this.IP1+'/dashboard/findMonthTestData','get',function (res) {
-            console.log(res);
-            if(res){
-                option.series[0].data = res.v[0];
-                option.xAxis[0].data = res.x;
-            }else{
-                option.series.data = [];
-            }
-            myChart.setOption(option, true);
-        });*/
+        myChart.setOption(option, true);
     },
 
     /*
@@ -612,6 +623,32 @@ FullScreen.prototype = {
                             color: '#fff'
                         }
                     },
+                    indicator:[
+                        {
+                            max:100,
+                            text:"刑满释放人员"
+                        },
+                        {
+                            max:100,
+                            text:"精神病人员"
+                        },
+                        {
+                            max:100,
+                            text:"重点青少年"
+                        },
+                        {
+                            max:100,
+                            text:"艾滋病人员"
+                        },
+                        {
+                            max:100,
+                            text:"矫正人员"
+                        },
+                        {
+                            max:100,
+                            text:"吸毒人员"
+                        }
+                    ]
                 }
             ],
             series : [
@@ -626,13 +663,15 @@ FullScreen.prototype = {
                     },
                     data : [
                         {
-                            name : '人员分类'
+                            name : '人员分类',
+                            value:[97, 42, 88, 94, 90, 86]
                         }
                     ]
                 }
             ]
         };
-        this._ajax(this.IP+'/dashboard/findKeyPersonnel','get',function (res) {
+        myChart.setOption(option, true);
+        /*this._ajax(this.IP+'/dashboard/findKeyPersonnel','get',function (res) {
             console.log(res);
             if(res){
                 option.series[0].data[0].value = res.v;
@@ -651,7 +690,7 @@ FullScreen.prototype = {
             myChart.setOption(option, true);
             $('#todayAlermNum').text(res.y[0].value);
             $('#topAlerm').text(res.y[1].value);
-        });
+        });*/
     },
 
     /*
@@ -670,7 +709,8 @@ FullScreen.prototype = {
                 y:'bottom',
                 textStyle:{
                     color:'#fff'
-                }
+                },
+                data:["快捷报警","视频报警","消息报警","一键求助"]
             },
             calculable : false,
             series : [
@@ -691,11 +731,18 @@ FullScreen.prototype = {
                                 show : false
                             }
                         }
-                    }
+                    },
+                    data:[
+                        {"value":10, "name":"快捷报警"},
+                        {"value":5, "name":"视频报警"},
+                        {"value":15, "name":"消息报警"},
+                        {"value":25, "name":"一键求助"}
+                    ]
                 }
             ]
         };
-        this._ajax(this.IP+'/dashboard/findConvenienceServices','get',function (res) {
+        myChart.setOption(option, true);
+        /*this._ajax(this.IP+'/dashboard/findConvenienceServices','get',function (res) {
             console.log(res);
             if(res){
                 option.series[0].data = res.v;
@@ -708,7 +755,7 @@ FullScreen.prototype = {
                 option.series.data = [];
             }
             myChart.setOption(option, true);
-        });
+        });*/
     },
 
     /*
